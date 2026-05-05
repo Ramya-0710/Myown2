@@ -32,12 +32,16 @@ video::-webkit-media-controls {
 <script>
 const video = document.getElementById("video");
 
-// Tap to play/pause
+let isPlaying = false;
+
 document.body.addEventListener("click", () => {
-  if (video.paused) {
-    video.play();
+  if (!isPlaying) {
+    video.play().then(() => {
+      isPlaying = true;
+    }).catch(() => {});
   } else {
     video.pause();
+    isPlaying = false;
   }
 });
 </script>
