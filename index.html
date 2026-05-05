@@ -10,13 +10,14 @@ body {
   overflow: hidden;
 }
 
+/* Video fills screen */
 video {
   width: 100%;
   height: 100vh;
-  object-fit: contain;
+  object-fit: cover;
 }
 
-/* Hide controls */
+/* Hide all default controls (extra safety) */
 video::-webkit-media-controls {
   display: none !important;
 }
@@ -31,17 +32,29 @@ video::-webkit-media-controls {
 
 <script>
 const video = document.getElementById("video");
+let started = false;
 
+// Tap anywhere
 document.body.addEventListener("click", () => {
-  if (video.paused) {
+
+  // First tap → play + fullscreen
+  if (!started) {
     video.play().catch(()=>{});
+    started = true;
 
     if (video.requestFullscreen) {
       video.requestFullscreen();
     }
-  } else {
-    video.pause();
+  } 
+  // Next taps → toggle play/pause
+  else {
+    if (video.paused) {
+      video.play().catch(()=>{});
+    } else {
+      video.pause();
+    }
   }
+
 });
 </script>
 
