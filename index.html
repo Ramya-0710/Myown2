@@ -32,16 +32,15 @@ video::-webkit-media-controls {
 <script>
 const video = document.getElementById("video");
 
-let isPlaying = false;
-
 document.body.addEventListener("click", () => {
-  if (!isPlaying) {
-    video.play().then(() => {
-      isPlaying = true;
-    }).catch(() => {});
+  if (video.paused) {
+    video.play().catch(()=>{});
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    }
   } else {
     video.pause();
-    isPlaying = false;
   }
 });
 </script>
