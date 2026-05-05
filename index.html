@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -15,14 +16,9 @@ video {
   object-fit: contain;
 }
 
-#overlay {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 16px;
-  opacity: 0.8;
+/* Hide controls */
+video::-webkit-media-controls {
+  display: none !important;
 }
 </style>
 </head>
@@ -33,18 +29,13 @@ video {
   <source src="MyVideo.mp4" type="video/mp4">
 </video>
 
-<div id="overlay"></div>
-
 <script>
 const video = document.getElementById("video");
 
+// Tap to play/pause
 document.body.addEventListener("click", () => {
   if (video.paused) {
     video.play();
-    
-    if (video.requestFullscreen) {
-      video.requestFullscreen();
-    }
   } else {
     video.pause();
   }
