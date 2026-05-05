@@ -37,16 +37,16 @@ video {
 
 <script>
 const video = document.getElementById("video");
-const overlay = document.getElementById("overlay");
 
 document.body.addEventListener("click", () => {
   if (video.paused) {
     video.play();
-    overlay.style.display = "none";
+    
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    }
   } else {
     video.pause();
-    overlay.style.display = "block";
-    overlay.innerText = "";
   }
 });
 </script>
