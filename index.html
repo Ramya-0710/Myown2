@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
 body {
   margin: 0;
@@ -9,20 +10,17 @@ body {
   overflow: hidden;
 }
 
+/* Video fills screen */
 video {
   width: 100%;
   height: 100vh;
   object-fit: contain;
+  background: white;
 }
 
-#overlay {
-  position: absolute;
-  bottom: 30px;
-  width: 100%;
-  text-align: center;
-  color: white;
-  font-size: 16px;
-  opacity: 0.8;
+/* Hide all default controls (extra safety) */
+video::-webkit-media-controls {
+  display: none !important;
 }
 </style>
 </head>
@@ -30,24 +28,36 @@ video {
 <body>
 
 <video id="video" playsinline>
-  <source src="Sis.mp4" type="video/mp4">
+  <source src="d:\Downloads\MyVideo.mp4" type="video/mp4">
 </video>
 
 <div id="overlay"></div>
 
 <script>
 const video = document.getElementById("video");
-const overlay = document.getElementById("overlay");
+let started = false;
 
+// Tap anywhere
 document.body.addEventListener("click", () => {
-  if (video.paused) {
-    video.play();
-    overlay.style.display = "none";
-  } else {
-    video.pause();
-    overlay.style.display = "block";
-    overlay.innerText = "";
+
+  // First tap → play + fullscreen
+  if (!started) {
+    video.play().catch(()=>{});
+    started = true;
+
+    if (video.requestFullscreen) {
+      video.requestFullscreen();
+    }
+  } 
+  // Next taps → toggle play/pause
+  else {
+    if (video.paused) {
+      video.play().catch(()=>{});
+    } else {
+      video.pause();
+    }
   }
+
 });
 </script>
 
